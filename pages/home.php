@@ -1,0 +1,3 @@
+<?php $desc = "Live information about busses in the capital. Created to help photographers track down ellusive vehicles."; $header = '<script src="content/jquery.js"></script><script src="content/easing.js"></script><script src="content/script.js"></script>'; ?><div id="padding"></div><div class="main" id="wrapper"><h1>London Vehicle Finder</h1><input placeholder="Enter Vehicle/Route/Stop" id="l" /><strong></strong><button id="b"><span><i><b></b><u>Go</u></i></span></button><hr id="load" /><hr /><div id="content"></div></div><?php
+$row = getDB()->lvf_config->findOne(array(), array('status_msg' => 1));
+if (isset($row['status_msg'])) { ?><div id="info"><div><div>i</div><?php print $row['status_msg']; ?></div></div><?php } ?>

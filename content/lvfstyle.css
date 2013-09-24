@@ -1,0 +1,379 @@
+body, html {
+	margin: 0;
+	height: 100%;
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	background-color: #F7F7F7;
+	color: #222;
+	font-family: Arial, Sans-serif;
+	min-width: 1100px;
+}
+form {
+	display: inline-block;
+}
+#padding {
+	height: 200px;
+}
+#hpadding {
+	height: 50px;
+}
+#nav {
+	border-bottom: 1px solid #bbb;
+}
+#nav > div {
+	width: 1060px;
+	margin: auto;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #bbb;
+}
+#nav button, #nav .button {
+	padding: 0;
+	border-right: 1px solid #ccc;
+	color: #666;
+	background: #f9f9f9;
+}
+button > u, .button div {
+	text-decoration: none;
+	display: block;
+	padding: 3px .4em;
+	border-bottom: 3px solid #EEE;
+}
+button:hover > u, .button:hover div {
+	border-bottom: 3px solid #CCC;
+}
+.sel div {
+	border-bottom: 3px solid #7FBDFF !important;
+}
+#nav button:hover, #nav .button:hover {
+	color: #222;
+}
+#nav button, #nav .button, #nav form {
+	margin: 0;
+}
+.br {
+	border-left: 1px solid #ccc !important;
+}
+.br, .br button {
+	float: right;
+	border-right: 0 !important;
+}
+#wrapper {
+	width: 1040px;
+	height: 120px;
+
+	margin: auto;
+
+	border-radius: 10px;
+	text-align: center;
+	padding: 10px 10px 20px;
+	box-shadow: 0px 0px 60px #DDD;
+	-webkit-box-shadow: 0px 0px 60px #DDD;
+	font-size: 20px;
+}
+input, select {
+	padding: 3px;
+	font-size: 18px;
+	color: #222;
+}
+input {
+	width: 300px;
+}
+#b {
+	margin-left: 30px;
+}
+#b span i {
+	padding: 3px 15px;
+}
+.placeholder {
+	color: #aaa;
+}
+#footer {
+	margin: 5px;
+	text-align: right;
+	font-size: 11px;
+	cursor: pointer;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	margin-top: -20px;
+}
+#footer, #footer a {
+	color: #BBB;
+}
+#footer:hover a, #footer:hover {
+	color: #222;
+}
+#footerpadding {
+	height: 50px;
+}
+#footerplace {
+	min-height: 100%;
+}
+.main h1 {
+	font-size: 40px;
+	padding: 15px;
+	margin: 0;
+}
+.main h2 {
+	font-weight: normal;
+	margin: 5px 0;
+	font-size: 24px;
+}
+.main h3 {
+	margin-bottom: 0;
+}
+strong {
+	background: url('ajax.gif') center center no-repeat;
+	width: 60px;
+	display: none;
+	height: 16px;
+	margin-left: 30px;
+}
+hr {
+	display: none;
+	border: 0;
+	border-top: 1px solid #DDD;
+	margin: 0 0 10px;
+}
+#load {
+	margin: 10px 0 -1px;
+	width: 50%;
+	border-color: #1988FF;
+	display: block;
+	opacity: 0;
+	position: relative;
+	text-align: left;
+}
+#load:after {
+	content: '';
+	box-shadow: 0 0 6px 2px #1044BB;
+	float: right;
+	width: 5px;
+}
+#wrapper div {
+	text-decoration: none;
+	text-align: center;
+}
+#wrapper div * {
+	text-align: left;
+}
+#content > span {
+	width: 100%;
+	text-align: center;
+	margin-bottom: 26px;
+}
+#content span {
+	display: inline-block;
+}
+a {
+	color: #444;
+	text-decoration: none;
+}
+#content a:hover, #footer a:hover {
+	border-bottom: 1px dashed #444;
+}
+.button:hover {
+	border-bottom: 0;
+}
+table {
+	width: 100%;
+	border-spacing: 10px 0;
+}
+td[colspan*="5"], td[colspan*="3"] {
+	color: #1988FF;
+}
+.sd {
+	color: #1988FF;
+}
+.sd a {
+	color: #3F8ADB;
+}
+
+/* Start custom button CSS here
+---------------------------------------- */
+button, .button {
+	display: inline-block;
+	padding: 3px 0;
+	border-width: 0;
+	overflow: visible;
+	color: #333;
+	font-size: 21px;
+	margin-left: 10px;
+	cursor: pointer;
+}
+* html button, * html .button {
+	padding-bottom: 1px;
+}
+html:not([lang*=""]) button, html:not([lang*=""]) .button {
+	margin: 0 0 0 10px;
+}
+button span, .button span {
+	background: #f9f9f9;
+	padding: 3px 0;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #bbb;
+	pointer-events: none;
+	display: inline !important;
+}
+* html button i, * html button span, * html .button i, * html .button span {
+	padding-top: 0;
+}
+button span i, .button span i {
+	margin: 0;
+	position: relative;
+	padding: 3px .4em;
+	border-width: 0;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #bbb;
+	pointer-events: none;
+}
+button b, .button b {
+	background: #e3e3e3;
+	position:absolute;
+	z-index: 2;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+	height: 40%;
+	border-top: 3px solid #eee;
+	pointer-events: none;
+}
+* html button b, * html .button b {
+	top: 1px;
+}
+button i u, .button i u {
+	position:relative;
+	z-index: 3;
+	text-decoration: none;
+	font-style: normal;
+}
+button:hover span, button:hover i, .button:hover span, .button:hover i {
+	border-color: #9cf !important;
+	color: #000;
+}
+button:active b, .button:active b {
+	bottom: auto;
+	top: 0;
+	border-top: 0px;
+	border-bottom: 3px solid #EEE;
+}
+
+.l {
+	float: left;
+	margin-left: 50px !important;
+}
+.r {
+	float: right;
+	margin-right: 50px !important;
+}
+
+#help {
+	margin: auto;
+	width: 1000px;
+	box-shadow: 0px 0px 60px #DDD;
+	padding: 30px;
+}
+#help, #help h1, #help h3 {
+	text-align: center;
+}
+#help * {
+	text-align: left;
+}
+.faq p, .faq ol {
+	margin-top: 0;
+	margin-left: 40px;
+}
+.faq h2 {
+	margin-bottom: 5px;
+}
+#info {
+	text-align: center;
+}
+#info > div {
+	margin-top: 30px;
+	box-shadow: 0px 0px 60px #DDD;
+	-webkit-box-shadow: 0px 0px 60px #DDD;
+	border-radius: 5px;
+	padding: 10px;
+	display: inline-block;
+}
+#info > div > div {
+	color: #CCC;
+	border: 1px solid #CCC;
+	border-radius: 10px;
+	display: inline-block;
+	width: 18px;
+	text-align: center;
+	margin-right: 6px;
+}
+#help form {
+	padding: 30px;
+}
+label {
+	font-size: 20px;
+	display: block;
+	margin: 10px 0;
+	text-align: right !important;
+	width: 100%;
+}
+label input {
+	margin-left: 10px;
+}
+#help button {
+	margin: auto;
+	display: block;
+}
+.c {
+	margin: 30px auto 0;
+	width: 279px;
+}
+.c button {
+	margin: 0 5px !important;
+	display: inline-block !important;
+}
+.list {
+	display: inline-block;
+	width: 100px;
+	padding: 5px;
+	cursor: pointer;
+	margin: 3px;
+}
+.list:hover {
+	background: #CCC url('cancel.png') right 5px center no-repeat;
+}
+.logtime {
+	width: 90px;
+	margin-right: 20px;
+	display: inline-block;
+	vertical-align: top;
+	text-align: right !important;
+}
+.log {
+	width: 850px;
+	margin-bottom: 10px;
+	display: inline-block;
+	vertical-align: top;
+}
+#logs {
+	max-height: 1000px;
+	overflow-y: scroll;
+}
+#anav {
+	margin-bottom: 20px;
+}
+#anav a {
+	padding: 5px;
+}
+#anav .sel {
+	border-bottom: 3px solid #7FBDFF !important;
+}
+#anav a:hover {
+	border-bottom: 3px solid #CCC;
+}
