@@ -55,47 +55,10 @@ if (isset($_GET['list'])) {
 	$template = false;
 } else {
 
-?><script>
-	window.onload = function() {
-		txt = document.getElementById('list');
-		txt.onkeydown = function(e) {
-			if (e.keyCode == 13) {
-				do_req("?list=" + txt.value, list);
-			}
-		};
-		btn = document.getElementById('add');
-		vidtxt = document.getElementById('newvid');
-		vidtxt.onkeydown = btn.onclick = function() {
-			do_req("?add&uvi=" + vidtxt.value + "&list=" + txt.value, list);
-		}
-	};
-	function list(r) {
-		obj = JSON.parse(r);
-
-		vids = document.getElementById('vids');
-		while (vids.firstChild) {
-			vids.removeChild(vids.firstChild);
-		}
-		for (i in obj[0]) {
-			var div = document.createElement("div");
-			div.className = "list";
-			div.id = obj[0][i];
-			div.innerHTML = obj[0][i];
-			if (obj[1][i] != 0) {
-				div.innerHTML = obj[1][i];
-			}
-			div.onclick = function() {
-				do_req("?remove&uvi=" + this.id + "&list=" + txt.value, list);
-			}
-			vids.appendChild(div);
-		}
-		document.getElementById('hr1').style.display = 'block';
-	}
-</script>
-<?php print $anav; ?>
+?>
 	<input type="text" style="margin-bottom: 10px" id="list" />
 	<hr id="hr1" />
 	<div id="vids"></div>
 	<hr style="display: block" />
 	<input type="text" id="newvid" /><button id="add" style="display: inline-block; margin-left: 15px" type="submit"><span><i><b></b><u>Add</u></i></span></button>
-</div><?php } ?>
+<?php } ?>

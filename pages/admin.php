@@ -8,23 +8,30 @@ if (!user::checkSession()) {
 }
 
 $valid_actions = array("vehicle", "lists", "logs");
-
 next($_GET);
 $action = key($_GET);
 if (!in_array($action, $valid_actions)) {
 	$action = "logs";
 }
 
-$anav = '<div id="hpadding"></div>
+if (isset($_GET['ajax'])) {
+	include "admin/" . $action . ".php";
+} else {
+$header = '<script src="content/admin.js"></script>';
+?><div id="hpadding"></div>
 <div id="help">
-	<div id="anav">';
+	<div id="anav"><?php
 foreach ($valid_actions as $val) {
-	$anav .= '
-		<a' . ($action == $val ? ' class="sel"' : '') . ' href="/admin/' . $val . '">' . ucwords($val) . '</a>';
+	?>
+		<a<?php print ($action == $val ? ' class="sel"' : ''); ?> onclick="return show('<?php print $val; ?>')" id="nav_<?php print $val; ?>" href="/admin?<?php print $val; ?>"><?php print ucwords($val); ?></a><?php
 }
-$anav .= '
-	</div>';
-
-include "admin/" . $action . ".php";
+?></div><?php
+foreach ($valid_actions as $val) {
+	?><div style="text-align: center<?php print ($action == $val ? '' : '; display: none'); ?>" id="<?php print $val; ?>"><?php
+	include "admin/" . $val . ".php";
+	?></div><?php
+}
+?></div><?php
+}
 
 ?>

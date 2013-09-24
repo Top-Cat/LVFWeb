@@ -98,87 +98,13 @@ if (isset($_GET['val'])) {
 	);
 } else {
 
-?><script>
-	fields = ["uvi", "vid", "cur_reg", "cdreg", "orig_reg", "operator", "fnum", "rnfnum", "sfnum", "note", "keep", "pre"]
-	type = [0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 2, 2];
-	window.onload = function() {
-		txt = document.getElementById('list');
-		dd = document.getElementById('field');
-		txt.onkeydown = function(e) {
-			if (e.keyCode == 13) {
-				do_req("?field=" + dd.selectedIndex + "&val=" + txt.value, list);
-			}
-		};
-	};
-	function save(obj) {
-		var elms = obj.parentNode.parentNode.getElementsByTagName("input");
-		var data = "";
-		for (var i = 0; i < elms.length; i++) {
-			elem = elms[i];
-			if (elem.type === 'checkbox') {
-				val = elem.checked;
-			} else {
-				val = elem.value;
-			}
-			data += "&" + elem.id + "=" + val;
-		}
-		do_req("?save" + data, saved);
-	}
-	function insert(obj) {
-		var elms = obj.parentNode.parentNode.getElementsByTagName("input");
-		var data = "";
-		for (var i = 0; i < elms.length; i++) {
-			if (type[i] > 0) {
-				elem = elms[i];
-				if (elem.type === 'checkbox') {
-					val = elem.checked;
-				} else {
-					val = elem.value;
-				}
-				data += "&" + elem.id + "=" + val;
-			}
-		}
-		do_req("?insert" + data, inserted);
-	}
-	function withdraw() {
-		if (confirm("Are you sure?")) {
-			do_req("?withdraw&vid=" + document.getElementById('vid').value, saved);
-		}
-	}
-	function saved(r) {
-	}
-	function inserted(r) {
-		document.getElementById('uvi').value = r;
-	}
-	function list(r) {
-		obj = JSON.parse(r);
-
-		for (y in fields) {
-			x = fields[y];
-			elem = document.getElementById(x);
-			if (obj[x] !== undefined) {
-				if (type[y] < 2) {
-					elem.value = obj[x];
-				} else {
-					elem.checked = obj[x];
-				}
-			} else {
-				if (type[y] < 2) {
-					elem.value = "";
-				} else {
-					elem.checked = false;
-				}
-			}
-		}
-	}
-</script>
-<?php print $anav; ?>
+?>
 	<select id="field"><?php
 		foreach ($fields as $v) { ?>
 		<option><?php print $v; ?></option><?php 
 		} ?>
 	</select>
-	<input type="text" style="margin-bottom: 10px" id="list" />
+	<input type="text" style="margin-bottom: 10px" id="search" />
 	<hr style="display: block" />
 	<form id="v">
 		<label>UVI: <input type="text" id="uvi" disabled /></label>
@@ -193,6 +119,9 @@ if (isset($_GET['val'])) {
 		<label>Note: <input type="text" id="note" /></label>
 		<label>Keep: <input type="checkbox" id="keep" /></label>
 		<label>Pre-entered: <input type="checkbox" id="pre" /></label>
-		<div class="c"><button type="button" onclick="insert(this)"><span><i><b></b><u>Insert</u></i></span></button><button type="button" onclick="save(this)"><span><i><b></b><u>Save</u></i></span></button><button type="button" onclick="withdraw()"><span><i><b></b><u>Withdraw</u></i></span></button></div>
+		<div class="c"><button type="button" onclick="insert(this)"><span><i><b></b><u>Insert</u></i></span></button><?php
+		?><button type="button" onclick="save(this)"><span><i><b></b><u>Save</u></i></span></button><?php
+		?><button type="button" onclick="withdraw()"><span><i><b></b><u>Withdraw</u></i></span></button><?php
+		?><button type="button" onclick="doclear(this)"><span><i><b></b><u>Clear</u></i></span></button></div>
 	</form>
-</div><?php } ?>
+<?php } ?>
