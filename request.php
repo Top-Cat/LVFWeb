@@ -67,6 +67,9 @@ if (preg_match($regex, $reg, $matches)) {
 				structureData($vidarr);
 				break;
 		}
+	} catch (MongoCursorTimeoutException $e) {
+		error_log($e->getMessage());
+		output::setError("Database didn't respond in a timely maner, please try again later");
 	} catch (Exception $e) {
 		error_log($e->getMessage());
 		debug::fatal("Unhandled exception while processing request Input=" . print_r(output::getRequest(), true) . " Error=" . $e->getMessage());
