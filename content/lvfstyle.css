@@ -357,9 +357,17 @@ label input {
 }
 .log {
 	width: 814px;
-	margin-bottom: 10px;
 	display: inline-block;
 	vertical-align: top;
+}
+.editable {
+	cursor: pointer;
+}
+.editable:hover {
+	background-color: #DDD;
+}
+#logs > div {
+	padding: 5px;
 }
 #logs {
 	max-height: 700px;

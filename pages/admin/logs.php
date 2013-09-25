@@ -9,7 +9,18 @@ if (isset($_GET['get'])) {
 	$arr = array();
 	while ($c->hasNext()) {
 		$row = $c->getNext();
-		$arr[] = array($row['_id']->{'$id'}, $row['_id']->getTimestamp(), $row['text']);
+
+		$out = array(
+			'id' => $row['_id']->{'$id'},
+			'time' => $row['_id']->getTimestamp(),
+			'txt' => $row['text']
+		);
+
+		if (isset($row['uvi'])) {
+			$out['uvi'] = $row['uvi'];
+		}
+
+		$arr[] = $out;
 	}
 	print json_encode(array_reverse($arr));
 	$template = false;

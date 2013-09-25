@@ -92,7 +92,18 @@ if (isset($_GET['val'])) {
 		array(
 			array(
 				'task' => 'withdraw',
-				'vid' => intval($_GET['vid'])
+				'uvi' => intval($_GET['uvi'])
+			)
+		)
+	);
+} else if (isset($_GET['delete'])) {
+	query(
+		"lvf_tasks",
+		"insert",
+		array(
+			array(
+				'task' => 'delete',
+				'uvi' => intval($_GET['uvi'])
 			)
 		)
 	);
@@ -122,6 +133,7 @@ if (isset($_GET['val'])) {
 		<div class="c"><button type="button" onclick="insert(this)"><span><i><b></b><u>Insert</u></i></span></button><?php
 		?><button type="button" onclick="save(this)"><span><i><b></b><u>Save</u></i></span></button><?php
 		?><button type="button" onclick="withdraw()"><span><i><b></b><u>Withdraw</u></i></span></button><?php
+		?><button type="button" onclick="delete()"><span><i><b></b><u>Delete</u></i></span></button><?php
 		?><button type="button" onclick="doclear(this)"><span><i><b></b><u>Clear</u></i></span></button></div>
 	</form>
 <?php } ?>

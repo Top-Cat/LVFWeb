@@ -15,11 +15,11 @@ function show(val) {
 fields = ["uvi", "vid", "cur_reg", "cdreg", "orig_reg", "operator", "fnum", "rnfnum", "sfnum", "note", "keep", "pre"]
 type = [0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 2, 2];
 window.addEventListener('load', function() {
-	txt = document.getElementById('search');
+	search_txt = document.getElementById('search');
 	dd = document.getElementById('field');
-	txt.onkeydown = function(e) {
+	search_txt.onkeydown = function(e) {
 		if (e.keyCode == 13) {
-			do_req("?field=" + dd.selectedIndex + "&val=" + txt.value, search);
+			do_req("?vehicle&ajax&field=" + dd.selectedIndex + "&val=" + search_txt.value, search);
 		}
 	};
 }, false);
@@ -35,7 +35,7 @@ function save(obj) {
 		}
 		data += "&" + elem.id + "=" + val;
 	}
-	do_req("?save" + data, saved);
+	do_req("?vehicle&ajax&save" + data, saved);
 }
 function insert(obj) {
 	var elms = obj.parentNode.parentNode.getElementsByTagName("input");
@@ -51,7 +51,7 @@ function insert(obj) {
 			data += "&" + elem.id + "=" + val;
 		}
 	}
-	do_req("?insert" + data, inserted);
+	do_req("?vehicle&ajax&insert" + data, inserted);
 }
 function doclear(obj) {
 	var elms = obj.parentNode.parentNode.getElementsByTagName("input");
@@ -65,8 +65,15 @@ function doclear(obj) {
 	}
 }
 function withdraw() {
-	if (confirm("Are you sure?")) {
-		do_req("?withdraw&vid=" + document.getElementById('vid').value, saved);
+	vid = document.getElementById('vid').value;
+	if (confirm("Are you sure you want to withdraw the vehicle with vid '" + vid + "'?")) {
+		do_req("?vehicle&ajax&withdraw&vid=" + vid, saved);
+	}
+}
+function delete() {
+	uvi = document.getElementById('uvi').value;
+	if (confirm("Are you sure you want to delete the vehicle with uvi '" + uvi + "'?")) {
+		do_req("?vehicle&ajax&delete&uvi=" + uvi, saved);
 	}
 }
 function saved(r) {
@@ -148,25 +155,37 @@ function log(r) {
 
 	logs = document.getElementById('logs');
 	for (i in obj) {
+		var container = document.createElement("div");
+
 		var time = document.createElement("div");
 		time.className = "logtime";
-		d = new Date(obj[i][1] * 1000);
+		d = new Date(obj[i]['time'] * 1000);
 		y = d.getFullYear();
 		m = d.getMonth() + 1;
 		h = d.getHours();
 		j = d.getMinutes();
 		d = d.getDate();
 		time.innerHTML = y + "-" + (m <= 9 ? "0" + m : m) + "-" + (d <= 9 ? "0" + d : d) + " " + (h <= 9 ? "0" + h : h) + ":" + (j <= 9 ? "0" + j : j);
+		container.appendChild(time);
 
 		var div = document.createElement("div");
 		div.className = "log";
-		if (obj[i][1] >= since_t) {
-			since_t = obj[i][1];
-			since = obj[i][0];
+		if (obj[i]['time'] >= since_t) {
+			since_t = obj[i]['time'];
+			since = obj[i]['id'];
 		}
-		div.innerHTML = obj[i][2];
+		div.innerHTML = obj[i]['txt'];
+		container.appendChild(div);
 
-		logs.insertBefore(div, logs.firstChild);
-		logs.insertBefore(time, logs.firstChild);
+		if (obj[i]['uvi'] != undefined) {
+			container.className = "editable";
+			container.id = obj[i]['uvi'];
+			container.onclick = function() {
+				show('vehicle');
+				do_req("?vehicle&ajax&field=1&val=" + this.id, search);
+			};
+		}
+
+		logs.insertBefore(container, logs.firstChild);
 	}
 }
