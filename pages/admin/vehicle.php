@@ -133,7 +133,7 @@ if (isset($_GET['val'])) {
 		<div class="c"><button type="button" onclick="insert(this)"><span><i><b></b><u>Insert</u></i></span></button><?php
 		?><button type="button" onclick="save(this)"><span><i><b></b><u>Save</u></i></span></button><?php
 		?><button type="button" onclick="withdraw()"><span><i><b></b><u>Withdraw</u></i></span></button><?php
-		?><button type="button" onclick="delete()"><span><i><b></b><u>Delete</u></i></span></button><?php
+		?><button type="button" onclick="dodelete()"><span><i><b></b><u>Delete</u></i></span></button><?php
 		?><button type="button" onclick="doclear(this)"><span><i><b></b><u>Clear</u></i></span></button></div>
 	</form>
 <?php } ?>

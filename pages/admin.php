@@ -7,7 +7,7 @@ if (!user::checkSession()) {
 	die();
 }
 
-$valid_actions = array("vehicle", "lists", "logs");
+$valid_actions = array("logs", "vehicle", "lists", "destinations", "stops", "history", "stats");
 next($_GET);
 $action = key($_GET);
 if (!in_array($action, $valid_actions)) {
@@ -15,9 +15,10 @@ if (!in_array($action, $valid_actions)) {
 }
 
 if (isset($_GET['ajax'])) {
+	$template = false;
 	include "admin/" . $action . ".php";
 } else {
-$header = '<script src="content/admin.js"></script>';
+$header = '<script src="content/admin.js"></script><script>cur = "' . $action . '";</script>';
 ?><div id="hpadding"></div>
 <div id="help">
 	<div id="anav"><?php

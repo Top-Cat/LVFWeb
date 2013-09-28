@@ -3,7 +3,7 @@
 if (isset($_GET['list'])) {
 	if (isset($_GET['uvi'])) {
 		if (isset($_GET['remove'])) {
-			$r = query("lvf_vehicles", "findAndModify", array(array("uvi" => intval($_GET['uvi'])), array('$pull' => array("lists" => $_GET['list'])), array('uvi' => 1, 'vid' => 1)));
+			$r = query("lvf_vehicles", "findAndModify", array(array("uvi" => intval($_GET['uvi'])), array('$pull' => array("lists" => $_GET['list'])), array('uvi' => 1, 'vid' => 1, 'lists' => 1)));
 		} else if (isset($_GET['add'])) {
 			$r = query(
 				"lvf_vehicles",
@@ -39,7 +39,7 @@ if (isset($_GET['list'])) {
 		$sort[] = isset($row['vid']) ? $row['vid'] : $row['uvi'];
 	}
 	if (!empty($r)) {
-		$key = array_search($_GET['list'], $lists);
+		$key = array_search($_GET['list'], $r['lists']);
 		if (isset($_GET['remove']) && $key !== false) {
 			unset($arr[$key]);
 			unset($vids[$key]);

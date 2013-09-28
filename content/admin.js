@@ -1,4 +1,3 @@
-cur = "logs";
 function show(val) {
 	if (val != cur) {
 		document.getElementById(cur).style.display = 'none';
@@ -22,7 +21,147 @@ window.addEventListener('load', function() {
 			do_req("?vehicle&ajax&field=" + dd.selectedIndex + "&val=" + search_txt.value, search);
 		}
 	};
+
+	txt = document.getElementById('list');
+	txt.onkeydown = function(e) {
+		if (e.keyCode == 13) {
+			do_req("?lists&ajax&list=" + txt.value, list);
+		}
+	};
+	btn = document.getElementById('add');
+	vidtxt = document.getElementById('newvid');
+	vidtxt.onkeydown = btn.onclick = function(e) {
+		if (e.type == 'click' || e.keyCode == 13) {
+			do_req("?lists&ajax&add&uvi=" + vidtxt.value + "&list=" + txt.value, list);
+		}
+	}
+
+	do_req("?logs&ajax&get", log);
+	setInterval(update, 10000);
+
+	routetxt = document.getElementById('route');
+	routetxt.onkeydown = function(e) {
+		if (e.keyCode == 13) {
+			do_req("?destinations&ajax&route=" + routetxt.value, route);
+		}
+	};
+
+	stop_find = document.getElementById('stop_find');
+	stop_name = document.getElementById('stop_name');
+	stop_find.onkeydown = function(e) {
+		if (e.keyCode == 13) {
+			do_req("?stops&ajax&stop=" + stop_find.value, stop);
+		}
+	};
+
+	histsrch = document.getElementById('search_history');
+	histsrch.onkeydown = function(e) {
+		if (e.keyCode == 13) {
+			do_req("?history&ajax&uvi=" + histsrch.value, history, function(){}, histsrch.value);
+		}
+	};
+
+	results = document.getElementById('results');
+	hresults = document.getElementById('hist_results');
 }, false);
+
+function p(v) {
+	return v < 10 ? "0" + v : v;
+}
+
+cUvi = 0;
+function history(r, uvi) {
+	cUvi = uvi;
+	obj = JSON.parse(r);
+	inner = "<div><div>Line ID</div><div>Date</div><div>First Seen</div><div>Last Seen</div><div>Route</div></div>";
+
+	for (x in obj) {
+		var date_raw = new Date(1000*obj[x]['date']['sec']);
+		date = p(date_raw.getDate()) + "/" + p(date_raw.getMonth() + 1) + "/" + date_raw.getFullYear();
+		var first_seen_raw = new Date(1000*obj[x]['first_seen']['sec']);
+		first_seen = p(first_seen_raw.getHours()) + ":" + p(first_seen_raw.getMinutes()) + ":" + p(first_seen_raw.getSeconds());
+		var last_seen_raw = new Date(1000*obj[x]['last_seen']['sec']);
+		last_seen = p(last_seen_raw.getHours()) + ":" + p(last_seen_raw.getMinutes()) + ":" + p(last_seen_raw.getSeconds());
+		inner += "<div>" +
+				"<div>" + obj[x]['lineid'] + "</div>" +
+				"<div>" + date + "</div>" +
+				"<div>" + first_seen + "</div>" +
+				"<div>" + last_seen + "</div>" +
+				"<div>" + obj[x]['route'] + "</div>" +
+				"<img src='content/move.png' onclick='histmove(\"" + obj[x]['_id']['$id'] + "\", this)' />" +
+				"</div>";
+	}
+
+	hresults.innerHTML = inner;
+}
+function histmove(id, obj) {
+	uviTo = document.getElementById('to_history').value;
+	if (uviTo != cUvi) {
+		do_req("?history&ajax&move&uvi=" + uviTo + "&id=" + id, saved);
+		obj.parentNode.parentNode.removeChild(obj.parentNode);
+	}
+}
+
+function stop(r) {
+	stop_name.value = r;
+}
+function stopsave() {
+	do_req("?stops&ajax&save&stop=" + stop_find.value + "&name=" + stop_name.value, saved);
+}
+function stopdelete() {
+	do_req("?stops&ajax&delete&stop=" + stop_find.value + "&name=" + stop_name.value, saved);
+}
+
+cRoute = 0;
+function route(r) {
+	obj = JSON.parse(r);
+	cRoute = obj[0]['route'];
+	inner = "<div><div>Line ID</div><div>Direction</div><div>Destination</div><div>Day</div><div>Count</div></div>";
+
+	for (x in obj) {
+		inner += "<div id='" + obj[x]['_id']['$id'] + "'>" +
+				"<input type='text' value='" + obj[x]['lineid'] + "' />" +
+				"<input type='text' value='" + obj[x]['direction'] + "' />" +
+				"<input type='text' value='" + obj[x]['destination'] + "' />" +
+				"<input type='text' value='" + (obj[x]['day'] != undefined ? obj[x]['day'] : "") + "' />" +
+				"<div>" + (obj[x]['dest_cnt'] != undefined ? obj[x]['dest_cnt'] : 0) + "</div>" +
+				"<img src='content/save.png' onclick='routesave(this)' />" +
+				"<img src='content/delete.png' onclick='routedelete(this)' />" +
+				"</div>";
+	}
+
+	results.innerHTML = inner;
+}
+function addrow() {
+	if (cRoute > 0) {
+		inner = "<input type='text' />" +
+			"<input type='text' />" +
+			"<input type='text' />" +
+			"<input type='text' />" +
+			"<div>0</div>" +
+			"<img src='content/save.png' />" +
+			"<img src='content/delete.png' />";
+		var newLine = document.createElement("div");
+		newLine.innerHTML = inner;
+
+		results.appendChild(newLine);
+	}
+}
+function routesave(obj) {
+	div = obj.parentNode;
+
+	dest = div.children[2].value;
+	day = div.children[3].value;
+
+	do_req("?destinations&ajax&save&id=" + div.id + "&day=" + day + "&dest=" + dest, saved);
+}
+function routedelete(obj) {
+	div = obj.parentNode;
+
+	do_req("?destinations&ajax&delete&id=" + div.id, saved);
+	div.parentNode.removeChild(div);
+}
+
 function save(obj) {
 	var elms = obj.parentNode.parentNode.getElementsByTagName("input");
 	var data = "";
@@ -70,7 +209,7 @@ function withdraw() {
 		do_req("?vehicle&ajax&withdraw&vid=" + vid, saved);
 	}
 }
-function delete() {
+function dodelete() {
 	uvi = document.getElementById('uvi').value;
 	if (confirm("Are you sure you want to delete the vehicle with uvi '" + uvi + "'?")) {
 		do_req("?vehicle&ajax&delete&uvi=" + uvi, saved);
@@ -103,21 +242,6 @@ function search(r) {
 	}
 }
 
-window.addEventListener('load', function() {
-	txt = document.getElementById('list');
-	txt.onkeydown = function(e) {
-		if (e.keyCode == 13) {
-			do_req("?lists&ajax&list=" + txt.value, list);
-		}
-	};
-	btn = document.getElementById('add');
-	vidtxt = document.getElementById('newvid');
-	vidtxt.onkeydown = btn.onclick = function(e) {
-		if (e.type == 'click' || e.keyCode == 13) {
-			do_req("?lists&ajax&add&uvi=" + vidtxt.value + "&list=" + txt.value, list);
-		}
-	}
-}, false);
 function list(r) {
 	obj = JSON.parse(r);
 
@@ -143,10 +267,6 @@ function list(r) {
 
 var since = "";
 var since_t = 0;
-window.addEventListener('load', function() {
-	do_req("?logs&ajax&get", log);
-	setInterval(update, 10000);
-}, false);
 function update() {
 	do_req("?logs&ajax&get&since=" + since, log);
 }
