@@ -107,6 +107,20 @@ if (isset($_GET['val'])) {
 			)
 		)
 	);
+} else if (isset($_GET['merge'])) {
+	query(
+		"lvf_tasks",
+		"insert",
+		array(
+			array(
+				'task' => 'merge',
+				'uvi' => intval($_GET['uvi']),
+				'extra' => array(
+					'uvi' => intval($_GET['uvi2'])
+				)
+			)
+		)
+	);
 } else {
 
 ?>
@@ -135,5 +149,6 @@ if (isset($_GET['val'])) {
 		?><button type="button" onclick="withdraw()"><span><i><b></b><u>Withdraw</u></i></span></button><?php
 		?><button type="button" onclick="dodelete()"><span><i><b></b><u>Delete</u></i></span></button><?php
 		?><button type="button" onclick="doclear(this)"><span><i><b></b><u>Clear</u></i></span></button></div>
+		<div class="c"><input type="text" id="merge_val" /><button type="button" onclick="merge()"><span><i><b></b><u>Merge</u></i></span></button></div>
 	</form>
 <?php } ?>

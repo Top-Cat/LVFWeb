@@ -120,9 +120,9 @@ function route(r) {
 
 	for (x in obj) {
 		inner += "<div id='" + obj[x]['_id']['$id'] + "'>" +
-				"<input type='text' value='" + obj[x]['lineid'] + "' />" +
-				"<input type='text' value='" + obj[x]['direction'] + "' />" +
-				"<input type='text' value='" + obj[x]['destination'] + "' />" +
+				"<div>" + obj[x]['lineid'] + "</div>" +
+				"<div>" + obj[x]['direction'] + "</div>" +
+				"<div>" + obj[x]['destination'] + "</div>" +
 				"<input type='text' value='" + (obj[x]['day'] != undefined ? obj[x]['day'] : "") + "' />" +
 				"<div>" + (obj[x]['dest_cnt'] != undefined ? obj[x]['dest_cnt'] : 0) + "</div>" +
 				"<img src='content/save.png' onclick='routesave(this)' />" +
@@ -132,7 +132,7 @@ function route(r) {
 
 	results.innerHTML = inner;
 }
-function addrow() {
+/*function addrow() {
 	if (cRoute > 0) {
 		inner = "<input type='text' />" +
 			"<input type='text' />" +
@@ -146,14 +146,14 @@ function addrow() {
 
 		results.appendChild(newLine);
 	}
-}
+}*/
 function routesave(obj) {
 	div = obj.parentNode;
 
 	dest = div.children[2].value;
 	day = div.children[3].value;
 
-	do_req("?destinations&ajax&save&id=" + div.id + "&day=" + day + "&dest=" + dest, saved);
+	do_req("?destinations&ajax&save&id=" + div.id + "&day=" + day, saved);
 }
 function routedelete(obj) {
 	div = obj.parentNode;
@@ -190,7 +190,26 @@ function insert(obj) {
 			data += "&" + elem.id + "=" + val;
 		}
 	}
+
+	y = ["fnum", "sfnum", "rnfnum"];
+	for (x in y) {
+		incField(y[x]);
+	}
+
 	do_req("?vehicle&ajax&insert" + data, inserted);
+}
+var pattern = /([a-z]*)([0]*)([0-9]*)/i;
+function incField(f) {
+	o = document.getElementById(f);
+	if (pattern.test(o.value)) {
+		match = o.value.match(pattern);
+		l = (match[2] + match[3]).length;
+		match[3]++;
+		while ((""+ match[3]).length < l) {
+			match[3] = "0" + match[3];
+		}
+		o.value = match[1] + match[3];
+	}
 }
 function doclear(obj) {
 	var elms = obj.parentNode.parentNode.getElementsByTagName("input");
@@ -203,10 +222,17 @@ function doclear(obj) {
 		}
 	}
 }
+function merge() {
+	uvi = document.getElementById('uvi').value;
+	merge = document.getElementById('merge_val').value;
+	if (confirm("Are you sure you want to merge the vehicle with uvi '" + uvi + "' onto '" + merge + "'?")) {
+		do_req("?vehicle&ajax&merge&uvi=" + uvi + "&uvi2=" + merge, saved);
+	}
+}
 function withdraw() {
-	vid = document.getElementById('vid').value;
-	if (confirm("Are you sure you want to withdraw the vehicle with vid '" + vid + "'?")) {
-		do_req("?vehicle&ajax&withdraw&vid=" + vid, saved);
+	uvi = document.getElementById('uvi').value;
+	if (confirm("Are you sure you want to withdraw the vehicle with uvi '" + uvi + "'?")) {
+		do_req("?vehicle&ajax&withdraw&uvi=" + uvi, saved);
 	}
 }
 function dodelete() {

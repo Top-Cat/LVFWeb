@@ -43,5 +43,4 @@ if (isset($_GET['route'])) {
 	<label style="display: inline-block; width: auto">Route: <input type="text" id="route" /></label>
 	<hr style="display: block" />
 	<div class="results" id="results"></div>
-	<img src="content/add.png" onclick="addrow()" style="margin-top: 10px" />
 <?php } ?>
