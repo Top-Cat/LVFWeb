@@ -403,3 +403,6 @@ label input {
 	cursor: pointer;
 	vertical-align: bottom;
 }
+#recaptcha_area {
+	margin: 0 auto 10px;
+}

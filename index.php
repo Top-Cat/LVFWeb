@@ -6,7 +6,7 @@ include "includes/connect.php";
 ob_start();
 
 $action = key($_GET);
-$valid_actions = array("help", "stats", "faq", "login", "admin");
+$valid_actions = array("help", "stats", "faq", "login", "admin", "register");
 if (!in_array($action, $valid_actions)) {
 	$action = "home";
 }

@@ -10,6 +10,26 @@ class user {
 		return $out;
 	}
 
+	public static function create($user, $pass) {
+		$fp = fopen('/dev/urandom','rb');
+		$salt = md5(fread($fp,32));
+		fclose($fp);
+
+		$hash = self::whirlpool($salt . $pass);
+
+		$row = query(
+			'lvf_users',
+			'insert',
+			array(
+				array(
+					'user' => strtolower($user),
+					'salt' => $salt,
+					'hash' => $hash
+				)
+			)
+		);
+	}
+
 	public static function login($user, $pass) {
 		$row = query(
 			'lvf_users',
@@ -44,6 +64,7 @@ class user {
 				array(
 					array(
 						'user' => strtolower($_SESSION['user']),
+						'admin' => true,
 						'hash' => $_SESSION['hash']
 					),
 					array(
