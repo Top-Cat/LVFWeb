@@ -124,7 +124,7 @@ function route(r) {
 				"<div>" + obj[x]['direction'] + "</div>" +
 				"<div>" + obj[x]['destination'] + "</div>" +
 				"<input type='text' value='" + (obj[x]['day'] != undefined ? obj[x]['day'] : "") + "' />" +
-				"<div>" + (obj[x]['dest_cnt'] != undefined ? obj[x]['dest_cnt'] : 0) + "</div>" +
+				"<div>" + (obj[x]['dest_cnt_y'] != undefined ? obj[x]['dest_cnt_y'] : 0) + "</div>" +
 				"<img src='content/save.png' onclick='routesave(this)' />" +
 				"<img src='content/delete.png' onclick='routedelete(this)' />" +
 				"</div>";

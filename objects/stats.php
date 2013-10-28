@@ -5,7 +5,7 @@ class stats {
 	private static $done = false;
 
 	public static function event($type) {
-		if (isset($events[$type])) {
+		if (isset(self::$events[$type])) {
 			self::$events[$type]++;
 		} else {
 			self::$events[$type] = 1;
@@ -14,28 +14,29 @@ class stats {
 
 	public static function finalise() {
 		if (!self::$done) {
-			query(
-				'lvf_suggest',
-				'update',
-				array(
+			if (isset($_GET['reg'])) {
+				query(
+					'lvf_suggest',
+					'update',
 					array(
-						'query' => strtoupper($_GET['reg'])
-					),
-					array(
-						'$inc' => array(
-							'count' => 1
+						array(
+							'query' => strtoupper($_GET['reg'])
 						),
-						'$set' => array(
-							'error' => output::isError()
+						array(
+							'$inc' => array(
+								'count' => 1
+							),
+							'$set' => array(
+								'error' => output::isError()
+							)
+						),
+						array(
+							'w' => 0,
+							'upsert' => true
 						)
-					),
-					array(
-						'w' => 0,
-						'upsert' => true
 					)
-				)
-			);
-			//self::$events['country.' . $_SERVER['GEOIP_COUNTRY'] . '.' . $_SERVER['GEOIP_CITY']] = 1;
+				);
+			}
 			query(
 				'lvf_stats',
 				'update',

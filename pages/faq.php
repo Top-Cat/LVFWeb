@@ -1,6 +1,6 @@
 <?php $title = "FAQ"; ?>
 <div id="hpadding"></div>
-<div id="help" class="faq">
+<div id="page" class="faq">
 	<h1>London Vehicle Finder FAQ</h1>
 	<a name="1"></a>
 	<h2>Q. Why did I get no / inacturate data?</h2>

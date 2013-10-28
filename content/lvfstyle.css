@@ -274,16 +274,16 @@ button:active b, .button:active b {
 	margin-right: 50px !important;
 }
 
-#help {
+#help, #page {
 	margin: auto;
 	width: 1000px;
 	box-shadow: 0px 0px 60px #DDD;
 	padding: 30px;
 }
-#help, #help h1, #help h3 {
+#help, #help h1, #help h3, #vehicle, #lists, #destinations, #stops, #history {
 	text-align: center;
 }
-#help * {
+#help *, #vids {
 	text-align: left;
 }
 .faq p, .faq ol {
@@ -384,6 +384,9 @@ label input {
 }
 #anav a:hover {
 	border-bottom: 3px solid #CCC;
+}
+.results {
+	text-align: left;
 }
 .results input, .results div div {
 	width: 165px;

@@ -17,7 +17,7 @@ function a($arr, $key) {
 
 function doCurl($request_str, $info_str = "", $explode = true) {
 	$time = microtime(true);
-	debug::info($info_str . $request_str);
+	debug::warn($info_str . $request_str);
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, str_replace("%", "", $request_str) );
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);

@@ -20,7 +20,7 @@ if (isset($_GET['ajax'])) {
 } else {
 $header = '<script src="content/admin.js"></script><script>cur = "' . $action . '";</script>';
 ?><div id="hpadding"></div>
-<div id="help">
+<div id="page">
 	<div id="anav"><?php
 foreach ($valid_actions as $val) {
 	?>
@@ -28,7 +28,7 @@ foreach ($valid_actions as $val) {
 }
 ?></div><?php
 foreach ($valid_actions as $val) {
-	?><div style="text-align: center<?php print ($action == $val ? '' : '; display: none'); ?>" id="<?php print $val; ?>"><?php
+	?><div <?php print ($action == $val ? '' : 'style="display: none" '); ?>id="<?php print $val; ?>"><?php
 	include "admin/" . $val . ".php";
 	?></div><?php
 }
