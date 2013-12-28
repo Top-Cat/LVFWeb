@@ -267,7 +267,8 @@ function from_history() {
 				'when' => $when,
 				'stop' => $r['stopid'],
 				'stopName' => $a,
-				'dest' => $r['destination']
+				'dest' => $r['destination'],
+				'valid' => $r['valid']
 			);
 		}
 		if (empty(output::getResponse()['lines'])) {

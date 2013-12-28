@@ -191,7 +191,11 @@ function displayRow() {
 				dest = line.dest;
 				out += "<h3>Destination is " + dest + "</h3><table><tr>" + buildHeaders({'Due': 65, 'Stop Id': 75, 'Stop Name': 0});
 			}
-			out += "</tr><tr><td>" + line['when'] + "</td><td><a href='#" + line['stop'] + "'>" + line['stop'] + "</a></td><td>" + line['stopName'] + "</td>";
+			out += "</tr><tr";
+			if (!line['valid']) {
+				out += " class='sd'";
+			}
+			out += "><td>" + line['when'] + "</td><td><a href='#" + line['stop'] + "'>" + line['stop'] + "</a></td><td>" + line['stopName'] + "</td>";
 		}
 	} else if (obj.request.cmd == "DUMPVEHICLE") {
 		out += "<h2>Data from countdown for vehicle " + obj.response.extra.reg + ", Vehicle Id " + obj.response.extra.id + "</h2><table><tr>" + buildHeaders({'Stop Id': 75, 'Route': 70, 'Line': 70, 'Dir': 50, 'Destination': 0, 'Time': 200});
