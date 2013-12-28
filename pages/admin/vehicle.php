@@ -92,7 +92,8 @@ if (isset($_GET['val'])) {
 		array(
 			array(
 				'task' => 'withdraw',
-				'uvi' => intval($_GET['uvi'])
+				'uvi' => intval($_GET['uvi']),
+				'failed' => false
 			)
 		)
 	);
@@ -103,7 +104,8 @@ if (isset($_GET['val'])) {
 		array(
 			array(
 				'task' => 'delete',
-				'uvi' => intval($_GET['uvi'])
+				'uvi' => intval($_GET['uvi']),
+				'failed' => false
 			)
 		)
 	);
@@ -117,7 +119,8 @@ if (isset($_GET['val'])) {
 				'uvi' => intval($_GET['uvi']),
 				'extra' => array(
 					'uvi' => intval($_GET['uvi2'])
-				)
+				),
+				'failed' => false
 			)
 		)
 	);
